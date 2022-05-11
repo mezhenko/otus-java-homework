@@ -1,11 +1,9 @@
 package homework;
 
-public class Customer {
+public class Customer implements Cloneable {
     private final long id;
     private String name;
     private long scores;
-
-    //todo: 1. в этом классе надо исправить ошибки
 
     public Customer(long id, String name, long scores) {
         this.id = id;
@@ -55,5 +53,14 @@ public class Customer {
     @Override
     public int hashCode() {
         return (int) (id ^ (id >>> 32));
+    }
+
+    @Override
+    public Object clone() {
+        try {
+            return (Customer) super.clone();
+        } catch (CloneNotSupportedException e) {
+            return new Customer(this.id, this.name, this.scores);
+        }
     }
 }

@@ -78,7 +78,7 @@ class CustomerTest {
         Map.Entry<Customer, String> middleScore = customerService.getNext(new Customer(10, "Key", 20));
         //then
         assertThat(middleScore.getKey()).isEqualTo(customer1);
-//        middleScore.getKey().setScores(10000);
+        middleScore.getKey().setScores(10000);
         middleScore.getKey().setName("Vasy");
 
         //when
@@ -108,7 +108,7 @@ class CustomerTest {
 
         //when
         Map.Entry<Customer, String> smallestScore = customerService.getSmallest();
-//        smallestScore.getKey().setName("Vasyl");
+        smallestScore.getKey().setName("Vasyl");
 
         //then
         assertThat(customerService.getSmallest().getKey().getName()).isEqualTo(customer2.getName());
