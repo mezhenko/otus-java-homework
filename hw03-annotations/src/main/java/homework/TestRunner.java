@@ -88,9 +88,9 @@ public class TestRunner {
         } catch (Exception e) {
             System.out.println("Before methods failed!");
             e.printStackTrace();
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     private Boolean runAfter(Object instance) {
@@ -101,9 +101,9 @@ public class TestRunner {
         } catch (Exception e) {
             System.out.println("After methods failed!");
             e.printStackTrace();
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     private void getReport(int count, int failed) {
