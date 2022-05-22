@@ -109,7 +109,7 @@ public class TestRunner {
     private void getReport(int count, int failed) {
         System.out.println("Test run{" +
                 "count=" + count +
-                ", failed='" + failed + '\'' +
+                ", failed=" + failed +
                 '}');
     }
 }
