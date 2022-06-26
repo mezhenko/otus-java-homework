@@ -12,6 +12,8 @@ public class Main {
         System.out.println("\n");
         testLogging.calculation2(2, true, 394857345L);
         System.out.println("\n");
+        testLogging.calculation2(2, true, false);
+        System.out.println("\n");
         testLogging.calculation3(2);
     }
 }

@@ -2,8 +2,10 @@ package homework;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.lang.reflect.Proxy;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import homework.annotations.Log;
@@ -18,17 +20,39 @@ class Ioc {
 
     static class DemoInvocationHandler implements InvocationHandler {
         private final TestLoggingInterface testLogging;
+        private final List<Method> methods;
 
         DemoInvocationHandler(TestLoggingInterface testLogging) {
             this.testLogging = testLogging;
+            this.methods = Arrays.asList(TestLogging.class.getDeclaredMethods());
         }
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            if (method.isAnnotationPresent(Log.class)) {
-                System.out.println("method params:" + Arrays.stream(args).map(Object::toString)
-                        .collect(Collectors.joining(", ")));
+
+            for (Method m : this.methods) {
+                if (!m.isAnnotationPresent(Log.class) || !m.getName().equals(method.getName())
+                        ||  m.getParameters().length != method.getParameters().length) {
+                    continue;
+                }
+
+                Parameter[] mParameters = m.getParameters();
+                Parameter[] methodParameters = method.getParameters();
+                boolean allParametersHaveSameType = true;
+                for (int i = 0; i < mParameters.length; i++) {
+                    if (!mParameters[i].getType().equals(methodParameters[i].getType())) {
+                        allParametersHaveSameType = false;
+                        break;
+                    }
+                }
+
+                if (allParametersHaveSameType) {
+                    System.out.println("method params: " + Arrays.stream(args).map(Object::toString)
+                            .collect(Collectors.joining(", ")));
+                }
+
             }
+
             return method.invoke(testLogging, args);
         }
 
