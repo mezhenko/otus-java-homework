@@ -92,3 +92,48 @@
  * spend msec:7635, sec:7
  * spend msec:7631, sec:7
  * spend msec:7547, sec:7
+
+
+##### После перехода на примитивы
+
+256m heap, 5 запусков:
+* spend msec:975, sec:0
+* spend msec:774, sec:0
+* spend msec:819, sec:0
+* spend msec:781, sec:0
+* spend msec:800, sec:0
+
+2046m heap, 5 запусков —
+* spend msec:825, sec:0
+* spend msec:791, sec:0
+* spend msec:869, sec:0
+* spend msec:845, sec:0
+* spend msec:810, sec:0
+
+124m heap, 5 запусков —
+* spend msec:721, sec:0
+* spend msec:794, sec:0
+* spend msec:807, sec:0
+* spend msec:864, sec:0
+* spend msec:873, sec:0
+
+96m heap, 5 запусков —
+* spend msec:745, sec:0
+* spend msec:782, sec:0
+* spend msec:774, sec:0
+* spend msec:868, sec:0
+* spend msec:757, sec:0
+
+64m heap, 5 запусков —
+* spend msec:828, sec:0
+* spend msec:826, sec:0
+* spend msec:824, sec:0
+* spend msec:813, sec:0
+* spend msec:748, sec:0
+
+48m heap, 5 запусков —
+* spend msec:736, sec:0
+* spend msec:850, sec:0
+* spend msec:814, sec:0
+* spend msec:773, sec:0
+* spend msec:839, sec:0
