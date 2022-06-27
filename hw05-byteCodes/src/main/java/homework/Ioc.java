@@ -6,6 +6,7 @@ import java.lang.reflect.Parameter;
 import java.lang.reflect.Proxy;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import homework.annotations.Log;
@@ -24,15 +25,15 @@ class Ioc {
 
         DemoInvocationHandler(TestLoggingInterface testLogging) {
             this.testLogging = testLogging;
-            this.methods = Arrays.asList(TestLogging.class.getDeclaredMethods());
+            this.methods = Arrays.stream(TestLogging.class.getDeclaredMethods())
+                    .filter(m -> m.isAnnotationPresent(Log.class)).toList();
         }
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 
             for (Method m : this.methods) {
-                if (!m.isAnnotationPresent(Log.class) || !m.getName().equals(method.getName())
-                        ||  m.getParameters().length != method.getParameters().length) {
+                if (!m.getName().equals(method.getName()) || m.getParameters().length != method.getParameters().length) {
                     continue;
                 }
 
@@ -47,8 +48,8 @@ class Ioc {
                 }
 
                 if (allParametersHaveSameType) {
-                    System.out.println("method params: " + Arrays.stream(args).map(Object::toString)
-                            .collect(Collectors.joining(", ")));
+                    System.out.println("method params: " + (Objects.isNull(args) ? "null" :
+                            Arrays.stream(args).map(Object::toString).collect(Collectors.joining(", "))));
                 }
 
             }

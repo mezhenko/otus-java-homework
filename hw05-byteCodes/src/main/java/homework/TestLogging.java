@@ -30,4 +30,15 @@ class TestLogging implements TestLoggingInterface{
     public void calculation3(int param) {
         System.out.println("calculation 1 param");
     }
+
+    @Override
+    @Log
+    public void calculation4() {
+        System.out.println("calculation4 — no params");
+    }
+
+    @Override
+    public void calculation5() {
+        System.out.println("calculation5  — no params");
+    }
 }

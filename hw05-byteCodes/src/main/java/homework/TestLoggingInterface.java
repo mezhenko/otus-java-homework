@@ -7,4 +7,7 @@ public interface TestLoggingInterface {
     void calculation2(int param, boolean param2, long param3);
     void calculation2(int param, boolean param2, boolean param3);
     void calculation3(int param);
+    void calculation4();
+    void calculation5();
+
 }

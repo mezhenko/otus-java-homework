@@ -6,6 +6,10 @@ package homework;
 public class Main {
     public static void main(String... args) {
         TestLoggingInterface testLogging = Ioc.createTestLogging();
+        testLogging.calculation4();
+        System.out.println("\n");
+        testLogging.calculation5();
+        System.out.println("\n");
         testLogging.calculation(2);
         System.out.println("\n");
         testLogging.calculation(2, true);
