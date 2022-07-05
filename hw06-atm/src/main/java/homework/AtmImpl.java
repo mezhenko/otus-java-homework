@@ -1,8 +1,5 @@
 package homework;
 
-import java.util.EnumMap;
-import java.util.Map;
-
 import homework.errors.CantWithdrawAmountError;
 import homework.errors.UnknownBanknoteError;
 
@@ -22,26 +19,26 @@ public class AtmImpl implements AtmInterface {
     }
 
     @Override
-    public void getWithdraw(Integer amount) throws CantWithdrawAmountError {
+    public BanknotesStateInterface getWithdraw(int amount) throws CantWithdrawAmountError, UnknownBanknoteError {
         int amountToWithdraw = amount;
-        Map<Banknote, Integer> banknotesCountToRemoveMap = new EnumMap<>(Banknote.class);
+        BanknotesStateInterface banknotesStateToRemove = BanknotesStateImpl.createEmpty();
         for (Banknote banknote : Banknote.BANKNOTES_ORDERED_LIST) {
             int banknoteCount = Math.min(this.state.getState().get(banknote),
                     amountToWithdraw / Banknote.getValueByBanknote(banknote));
             amountToWithdraw -= Banknote.getValueByBanknote(banknote) * banknoteCount;
-            banknotesCountToRemoveMap.put(banknote, banknoteCount);
+            banknotesStateToRemove.addBanknotes(banknote, banknoteCount);
         }
         if (amountToWithdraw != 0) {
             throw new CantWithdrawAmountError();
         }
 
-        for (Map.Entry<Banknote, Integer> entry : banknotesCountToRemoveMap.entrySet()) {
-            this.state.removeBanknotes(entry.getKey(), entry.getValue());
-        }
+        this.state.removeBanknotesByState(banknotesStateToRemove);
+
+        return banknotesStateToRemove;
     }
 
     @Override
-    public void addBanknotes(Integer banknoteValue, Integer count) throws UnknownBanknoteError {
+    public void addBanknotes(int banknoteValue, int count) throws UnknownBanknoteError {
         Banknote banknote = Banknote.getBanknoteByValue(banknoteValue);
         this.state.addBanknotes(banknote, count);
     }

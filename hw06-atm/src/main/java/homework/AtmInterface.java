@@ -8,9 +8,9 @@ import homework.errors.UnknownBanknoteError;
  */
 public interface AtmInterface {
 
-    void getWithdraw(Integer amount) throws CantWithdrawAmountError;
+    BanknotesStateInterface getWithdraw(int amount) throws CantWithdrawAmountError, UnknownBanknoteError;
 
-    void addBanknotes(Integer banknoteValue, Integer count) throws UnknownBanknoteError;
+    void addBanknotes(int banknoteValue, int count) throws UnknownBanknoteError;
 
     int getBalance();
 }

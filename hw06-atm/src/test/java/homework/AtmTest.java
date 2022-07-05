@@ -60,15 +60,32 @@ class AtmTest {
     }
 
     @Test()
+    @DisplayName("Проверяем, выданные банкноты")
+    void getWithdrawState() {
+        assertDoesNotThrow(() -> {
+            atm.addBanknotes(100, 4);
+            atm.addBanknotes(500, 2);
+            atm.addBanknotes(1000, 1);
+            atm.addBanknotes(5000, 3);
+            BanknotesStateInterface state = atm.getWithdraw(7100);
+
+            assertEquals(1, state.getState().get(Banknote.BANKNOTE_5000));
+            assertEquals(1, state.getState().get(Banknote.BANKNOTE_1000));
+            assertEquals(2, state.getState().get(Banknote.BANKNOTE_500));
+            assertEquals(1, state.getState().get(Banknote.BANKNOTE_100));
+        });
+    }
+
+    @Test()
     @DisplayName("Проверяем, что падает ошибка при попытке взять сумму, которую нельзя составить v2")
     void getInvalidAmount() {
-            assertDoesNotThrow(() -> {
-                atm.addBanknotes(100, 4);
-                atm.addBanknotes(500, 2);
-                atm.addBanknotes(1000, 1);
-                atm.addBanknotes(5000, 3);
-                atm.getWithdraw(6100);
-            });
+        assertDoesNotThrow(() -> {
+            atm.addBanknotes(100, 4);
+            atm.addBanknotes(500, 2);
+            atm.addBanknotes(1000, 1);
+            atm.addBanknotes(5000, 3);
+            atm.getWithdraw(6100);
+        });
 
         assertThrows(CantWithdrawAmountError.class, () -> atm.getWithdraw(400));
     }

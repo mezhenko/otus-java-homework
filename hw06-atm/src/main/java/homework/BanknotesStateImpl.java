@@ -5,6 +5,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 import homework.errors.CantWithdrawAmountError;
+import homework.errors.UnknownBanknoteError;
 
 /**
  * @author johnkel
@@ -31,17 +32,26 @@ public class BanknotesStateImpl implements BanknotesStateInterface {
     }
 
     @Override
-    public void addBanknotes(Banknote banknote, Integer count) {
+    public void addBanknotes(Banknote banknote, int count) throws UnknownBanknoteError {
+        if (!this.state.containsKey(banknote)) {
+            throw UnknownBanknoteError.createFromBanknote(banknote);
+        }
         Integer oldCount = this.state.get(banknote);
         this.state.put(banknote, oldCount + count);
     }
 
     @Override
-    public void removeBanknotes(Banknote banknote, Integer count) throws CantWithdrawAmountError {
-        Integer oldCount = this.state.get(banknote);
-        if (oldCount < count) {
-            throw new CantWithdrawAmountError();
+    public void removeBanknotesByState(BanknotesStateInterface otherState) throws CantWithdrawAmountError {
+        for (Map.Entry<Banknote, Integer> entry : otherState.getState().entrySet()) {
+            Banknote entryBanknote = entry.getKey();
+            if (!this.state.containsKey(entryBanknote) || this.state.get(entryBanknote) < entry.getValue()) {
+                throw new CantWithdrawAmountError();
+            }
         }
-        this.state.put(banknote, oldCount - count);
+
+        for (Map.Entry<Banknote, Integer> entry : otherState.getState().entrySet()) {
+            Banknote entryBanknote = entry.getKey();
+            this.state.put(entryBanknote, this.state.get(entryBanknote) - entry.getValue());
+        }
     }
 }
