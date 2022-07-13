@@ -1,7 +1,14 @@
 package ru.otus.crm.model;
 
+import ru.otus.crm.annotations.Column;
+import ru.otus.crm.annotations.Constructor;
+import ru.otus.crm.annotations.Id;
+
 public class Client {
+    @Id
     private Long id;
+
+    @Column
     private String name;
 
     public Client() {
@@ -12,6 +19,7 @@ public class Client {
         this.name = name;
     }
 
+    @Constructor
     public Client(Long id, String name) {
         this.id = id;
         this.name = name;
