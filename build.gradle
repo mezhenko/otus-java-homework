@@ -1,7 +1,10 @@
 plugins {
     id 'idea'
     id "io.spring.dependency-management" version "1.0.11.RELEASE"
+    id 'org.springframework.boot' version '2.6.6' apply false
     id 'com.github.johnrengelman.shadow' version '7.1.2' apply false
+    id 'com.google.cloud.tools.jib' version '3.2.1' apply false
+    id 'io.freefair.lombok' version '6.4.2' apply false
 }
 
 idea {
@@ -34,10 +37,9 @@ allprojects {
             dependency("org.openjdk.jmh:jmh-core:${Versions.jmh}")
             dependency("org.openjdk.jmh:jmh-generator-annprocess:${Versions.jmh}")
             dependency("org.glassfish:jakarta.json:${Versions.glassfishJson}")
-
+            dependency "org.ow2.asm:asm-commons:${Versions.asm}"
         }
     }
-
 
     configurations.all {
         resolutionStrategy {
