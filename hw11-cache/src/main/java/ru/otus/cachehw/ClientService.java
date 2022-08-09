@@ -27,7 +27,6 @@ public class ClientService {
         Client result = null;
 
         if (data.isPresent()) {
-            cache.put(id, data.get());
             result = data.get();
         }
 

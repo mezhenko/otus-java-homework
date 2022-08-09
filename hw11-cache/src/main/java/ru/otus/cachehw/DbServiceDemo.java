@@ -13,6 +13,7 @@ import ru.otus.cachehw.service.DbServiceClientImpl;
 import ru.otus.cachehw.sessionmanager.TransactionRunnerJdbc;
 
 public class DbServiceDemo {
+    private static final Logger logger = LoggerFactory.getLogger(DbServiceDemo.class);
     private static final String URL = "jdbc:postgresql://localhost:5430/demoDB";
     private static final String USER = "usr";
     private static final String PASSWORD = "pwd";
@@ -33,7 +34,15 @@ public class DbServiceDemo {
             dbServiceClient.saveClient(new Client(String.format("client number — %s", i)));
         }
 
-        HwCache<Long, Client> clientCache = new MyCache();
+        HwListener<Long, Client> listener = new HwListener<>() {
+            @Override
+            public void notify(Long id, Client client, String action) {
+                logger.info("HwListener — id:{}, client:{}, action: {}", id, client, action);
+            }
+        };
+
+        HwCache<Long, Client> clientCache = new MyCache<>();
+        clientCache.addListener(listener);
         ClientService clientManager = new ClientService(clientCache, dbServiceClient);
 
         log.info("cache warming start");
